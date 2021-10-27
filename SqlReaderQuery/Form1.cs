@@ -136,9 +136,9 @@ namespace SqlReaderQuery
                 
 
             }
-            catch
+            catch (Exception e)
             {
-                MessageBox.Show("entrada invalida");
+                MessageBox.Show("entrada invalida" + e);
                 con.Close();
                 
             }
@@ -214,27 +214,27 @@ namespace SqlReaderQuery
             string ChavePrimaria = Gr_data.Columns[0].Name;
             string ValorChavePrimaria = Gr_data.Rows[Linha].Cells[0].Value.ToString();
 
-            string ComandoUpdate = "update " + Cb_Database.Text + ".." + Cb_Tables.Text + " set " + NomeDaColuna + " = "
-                + Valor + " where " + ChavePrimaria + " = '" + ValorChavePrimaria + "'";//nome da chave primaria+
+            string ComandoUpdate = "update " + Cb_Database.Text + ".." + Cb_Tables.Text + " set " + NomeDaColuna + " = '"+ Valor + "' where " + ChavePrimaria + " = '" + ValorChavePrimaria + "'";//nome da chave primaria+
             ExecutarScript(ComandoUpdate, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
             Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
         }
 
         private void Bt_Exportar_Click(object sender, EventArgs e)
         {
-         
+            string StringConexao = @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True";
+
             string Where = Tx_ComandoAplicar.Text.ToLower();
             int Resultado = Where.IndexOf("where");
             if (Resultado > 1)
             {
                 string ResultadoPosWhere = Where.Substring(Resultado);
-                ExecutarScript("select * into temp from " + Cb_Tables.Text + " " + ResultadoPosWhere, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+                ExecutarScript("select * into DbSqltemp from " + Cb_Tables.Text + " " + ResultadoPosWhere, StringConexao);
             }
             else
-                ExecutarScript("select * into temp from " + Cb_Tables.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+                ExecutarScript("select * into DbSqltemp from " + Cb_Tables.Text, StringConexao);
 
-            Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
-        
+            Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, StringConexao);
+            MessageBox.Show("Dados Exportados com sucesso para a tabela temporaria");
         }
 
         private void Bt_Delete_Click(object sender, EventArgs e)
@@ -253,17 +253,20 @@ namespace SqlReaderQuery
 
         private void Bt_Importar_Click(object sender, EventArgs e)
         {
+            string StringConexao = @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True";
             string Where = Tx_ComandoAplicar.Text.ToLower();
             int Resultado = Where.IndexOf("where");
             if (Resultado > 1)
             {
                 string ResultadoPosWhere = Where.Substring(Resultado);
-                ExecutarScript("insert into " + Cb_Tables.Text + " select * from temp " + ResultadoPosWhere, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+                ExecutarScript("insert into " + Cb_Tables.Text + " select * from DbSqltemp " + ResultadoPosWhere, StringConexao);
+                
             }
             else
-                ExecutarScript("insert into " + Cb_Tables.Text + " select * from temp ", @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
-            
-            Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+                ExecutarScript("insert into " + Cb_Tables.Text + " select * from DbSqltemp ", StringConexao);
+
+           // ExecutarScript("Drop table DbSqltemp", StringConexao);
+            Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, StringConexao);
 
         }
     }

@@ -86,10 +86,10 @@ namespace SqlReaderQuery
             // Bt_Excel
             // 
             this.Bt_Excel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Bt_Excel.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.Bt_Excel.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.Bt_Excel.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.Bt_Excel.FlatAppearance.BorderSize = 0;
             this.Bt_Excel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Bt_Excel.ForeColor = System.Drawing.Color.White;
             this.Bt_Excel.Location = new System.Drawing.Point(630, 112);
             this.Bt_Excel.Name = "Bt_Excel";
             this.Bt_Excel.Size = new System.Drawing.Size(128, 23);
@@ -108,14 +108,14 @@ namespace SqlReaderQuery
             this.Gr_data.Location = new System.Drawing.Point(12, 141);
             this.Gr_data.Name = "Gr_data";
             this.Gr_data.RowTemplate.Height = 25;
-            this.Gr_data.Size = new System.Drawing.Size(746, 282);
+            this.Gr_data.Size = new System.Drawing.Size(746, 304);
             this.Gr_data.TabIndex = 5;
             this.Gr_data.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.Gr_data_CellValueChanged);
             // 
             // Cb_Database
             // 
             this.Cb_Database.FormattingEnabled = true;
-            this.Cb_Database.Location = new System.Drawing.Point(12, 12);
+            this.Cb_Database.Location = new System.Drawing.Point(12, 25);
             this.Cb_Database.Name = "Cb_Database";
             this.Cb_Database.Size = new System.Drawing.Size(169, 23);
             this.Cb_Database.TabIndex = 6;
@@ -124,7 +124,7 @@ namespace SqlReaderQuery
             // Cb_Tables
             // 
             this.Cb_Tables.FormattingEnabled = true;
-            this.Cb_Tables.Location = new System.Drawing.Point(212, 12);
+            this.Cb_Tables.Location = new System.Drawing.Point(213, 25);
             this.Cb_Tables.Name = "Cb_Tables";
             this.Cb_Tables.Size = new System.Drawing.Size(195, 23);
             this.Cb_Tables.TabIndex = 7;
@@ -189,7 +189,7 @@ namespace SqlReaderQuery
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(770, 471);
+            this.ClientSize = new System.Drawing.Size(770, 535);
             this.Controls.Add(this.Bt_Importar);
             this.Controls.Add(this.Bt_Delete);
             this.Controls.Add(this.Bt_Exportar);
