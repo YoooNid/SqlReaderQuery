@@ -123,12 +123,34 @@ namespace SqlReaderQuery
             
         }
 
+        private void ExecutarScript (string Comando, string StringConexaoBancoDeDados)
+        {
+            ds = new DataSet();
+            con.ConnectionString = StringConexaoBancoDeDados;
+            da = new SqlDataAdapter(Comando, con);
+            try
+            {
+                con.Open();
+                da.Fill(ds, "all");
+                con.Close();
+                
+
+            }
+            catch
+            {
+                MessageBox.Show("entrada invalida");
+                con.Close();
+                
+            }
+        }
+
         private void Bt_Executar_Click(object sender, EventArgs e)
         {
 
             ds = new DataSet();
             Gr_data.DataSource = null;
-            Gr_data.DataSource = ExecutarComando(Tx_ComandoExecutar.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+            ExecutarScript(Tx_ComandoExecutar.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+            Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
             Lb_Contagem.Text = (Gr_data.Rows.Count - 1).ToString();
         }
 
@@ -164,6 +186,85 @@ namespace SqlReaderQuery
                     XcelApp.Quit();
                 }
             }
+        }
+
+        private void Gr_data_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            int Coluna = e.ColumnIndex;
+            int Linha = e.RowIndex;
+            string Valor = Gr_data.Rows[Linha].Cells[Coluna].Value.ToString();
+            string NomeDaColuna = Gr_data.Columns[Coluna].Name;
+            string NumeroDaLinha = Gr_data.Rows[Linha].Index.ToString();
+            int NumeroDeLinhasView = Gr_data.Rows.Count - 1;
+            //int cont;
+            //int contColuna = 0;
+            //int contLinha = 0;
+            //for (cont = 0; cont <= NumeroDeLinhasView; cont++)
+            //{
+            //    if (dataGridView1.Rows[contLinha].Cells[contColuna].Value == dataGridView1.Rows[cont].Cells[contColuna].Value)
+
+            //    {
+            //        contColuna = contColuna + 1;
+            //        cont = 0;
+            //        MessageBox.Show("pulo de coluna");
+            //    }
+
+
+            //}
+            string ChavePrimaria = Gr_data.Columns[0].Name;
+            string ValorChavePrimaria = Gr_data.Rows[Linha].Cells[0].Value.ToString();
+
+            string ComandoUpdate = "update " + Cb_Database.Text + ".." + Cb_Tables.Text + " set " + NomeDaColuna + " = "
+                + Valor + " where " + ChavePrimaria + " = '" + ValorChavePrimaria + "'";//nome da chave primaria+
+            ExecutarScript(ComandoUpdate, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+            Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+        }
+
+        private void Bt_Exportar_Click(object sender, EventArgs e)
+        {
+         
+            string Where = Tx_ComandoAplicar.Text.ToLower();
+            int Resultado = Where.IndexOf("where");
+            if (Resultado > 1)
+            {
+                string ResultadoPosWhere = Where.Substring(Resultado);
+                ExecutarScript("select * into temp from " + Cb_Tables.Text + " " + ResultadoPosWhere, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+            }
+            else
+                ExecutarScript("select * into temp from " + Cb_Tables.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+
+            Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+        
+        }
+
+        private void Bt_Delete_Click(object sender, EventArgs e)
+        {
+            string DeletarComando = "delete from " + Cb_Tables.Text+" ";
+            int Resultado = Tx_ComandoAplicar.Text.ToLower().IndexOf("where");
+            if (Resultado > 1)
+            {
+                string ResultadoPosWhere = Tx_ComandoAplicar.Text.Substring(Resultado);
+                Tx_ComandoExecutar.Text = DeletarComando + ResultadoPosWhere;
+            }
+            else
+                Tx_ComandoExecutar.Text = DeletarComando;
+
+        }
+
+        private void Bt_Importar_Click(object sender, EventArgs e)
+        {
+            string Where = Tx_ComandoAplicar.Text.ToLower();
+            int Resultado = Where.IndexOf("where");
+            if (Resultado > 1)
+            {
+                string ResultadoPosWhere = Where.Substring(Resultado);
+                ExecutarScript("insert into " + Cb_Tables.Text + " select * from temp " + ResultadoPosWhere, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+            }
+            else
+                ExecutarScript("insert into " + Cb_Tables.Text + " select * from temp ", @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+            
+            Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
+
         }
     }
 }

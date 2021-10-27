@@ -39,12 +39,15 @@ namespace SqlReaderQuery
             this.Cb_Tables = new System.Windows.Forms.ComboBox();
             this.Lb_Contagem = new System.Windows.Forms.Label();
             this.Bt_Filtrar = new System.Windows.Forms.Button();
+            this.Bt_Exportar = new System.Windows.Forms.Button();
+            this.Bt_Delete = new System.Windows.Forms.Button();
+            this.Bt_Importar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Gr_data)).BeginInit();
             this.SuspendLayout();
             // 
             // Bt_Aplicar
             // 
-            this.Bt_Aplicar.Location = new System.Drawing.Point(12, 112);
+            this.Bt_Aplicar.Location = new System.Drawing.Point(12, 54);
             this.Bt_Aplicar.Name = "Bt_Aplicar";
             this.Bt_Aplicar.Size = new System.Drawing.Size(75, 23);
             this.Bt_Aplicar.TabIndex = 0;
@@ -54,7 +57,7 @@ namespace SqlReaderQuery
             // 
             // Bt_Executar
             // 
-            this.Bt_Executar.Location = new System.Drawing.Point(195, 112);
+            this.Bt_Executar.Location = new System.Drawing.Point(12, 83);
             this.Bt_Executar.Name = "Bt_Executar";
             this.Bt_Executar.Size = new System.Drawing.Size(75, 23);
             this.Bt_Executar.TabIndex = 1;
@@ -64,22 +67,25 @@ namespace SqlReaderQuery
             // 
             // Tx_ComandoAplicar
             // 
-            this.Tx_ComandoAplicar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.Tx_ComandoAplicar.Location = new System.Drawing.Point(12, 54);
+            this.Tx_ComandoAplicar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Tx_ComandoAplicar.Location = new System.Drawing.Point(93, 54);
             this.Tx_ComandoAplicar.Name = "Tx_ComandoAplicar";
-            this.Tx_ComandoAplicar.Size = new System.Drawing.Size(746, 23);
+            this.Tx_ComandoAplicar.Size = new System.Drawing.Size(665, 23);
             this.Tx_ComandoAplicar.TabIndex = 2;
             // 
             // Tx_ComandoExecutar
             // 
-            this.Tx_ComandoExecutar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.Tx_ComandoExecutar.Location = new System.Drawing.Point(12, 83);
+            this.Tx_ComandoExecutar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Tx_ComandoExecutar.Location = new System.Drawing.Point(93, 83);
             this.Tx_ComandoExecutar.Name = "Tx_ComandoExecutar";
-            this.Tx_ComandoExecutar.Size = new System.Drawing.Size(746, 23);
+            this.Tx_ComandoExecutar.Size = new System.Drawing.Size(665, 23);
             this.Tx_ComandoExecutar.TabIndex = 3;
             // 
             // Bt_Excel
             // 
+            this.Bt_Excel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Bt_Excel.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.Bt_Excel.FlatAppearance.BorderColor = System.Drawing.Color.White;
             this.Bt_Excel.FlatAppearance.BorderSize = 0;
@@ -94,7 +100,8 @@ namespace SqlReaderQuery
             // 
             // Gr_data
             // 
-            this.Gr_data.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.Gr_data.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Gr_data.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.Gr_data.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -103,29 +110,30 @@ namespace SqlReaderQuery
             this.Gr_data.RowTemplate.Height = 25;
             this.Gr_data.Size = new System.Drawing.Size(746, 282);
             this.Gr_data.TabIndex = 5;
+            this.Gr_data.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.Gr_data_CellValueChanged);
             // 
             // Cb_Database
             // 
             this.Cb_Database.FormattingEnabled = true;
             this.Cb_Database.Location = new System.Drawing.Point(12, 12);
             this.Cb_Database.Name = "Cb_Database";
-            this.Cb_Database.Size = new System.Drawing.Size(121, 23);
+            this.Cb_Database.Size = new System.Drawing.Size(169, 23);
             this.Cb_Database.TabIndex = 6;
             this.Cb_Database.SelectedValueChanged += new System.EventHandler(this.Cb_Database_SelectedValueChanged);
             // 
             // Cb_Tables
             // 
             this.Cb_Tables.FormattingEnabled = true;
-            this.Cb_Tables.Location = new System.Drawing.Point(207, 12);
+            this.Cb_Tables.Location = new System.Drawing.Point(212, 12);
             this.Cb_Tables.Name = "Cb_Tables";
-            this.Cb_Tables.Size = new System.Drawing.Size(121, 23);
+            this.Cb_Tables.Size = new System.Drawing.Size(195, 23);
             this.Cb_Tables.TabIndex = 7;
             this.Cb_Tables.SelectedValueChanged += new System.EventHandler(this.Cb_Tables_SelectedValueChanged);
             // 
             // Lb_Contagem
             // 
             this.Lb_Contagem.AutoSize = true;
-            this.Lb_Contagem.Location = new System.Drawing.Point(434, 12);
+            this.Lb_Contagem.Location = new System.Drawing.Point(545, 20);
             this.Lb_Contagem.Name = "Lb_Contagem";
             this.Lb_Contagem.Size = new System.Drawing.Size(0, 15);
             this.Lb_Contagem.TabIndex = 8;
@@ -140,11 +148,51 @@ namespace SqlReaderQuery
             this.Bt_Filtrar.UseVisualStyleBackColor = true;
             this.Bt_Filtrar.Click += new System.EventHandler(this.Bt_Filtrar_Click);
             // 
+            // Bt_Exportar
+            // 
+            this.Bt_Exportar.BackColor = System.Drawing.Color.Red;
+            this.Bt_Exportar.FlatAppearance.BorderSize = 0;
+            this.Bt_Exportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Bt_Exportar.ForeColor = System.Drawing.Color.White;
+            this.Bt_Exportar.Location = new System.Drawing.Point(174, 112);
+            this.Bt_Exportar.Name = "Bt_Exportar";
+            this.Bt_Exportar.Size = new System.Drawing.Size(75, 23);
+            this.Bt_Exportar.TabIndex = 10;
+            this.Bt_Exportar.Text = "Exportar";
+            this.Bt_Exportar.UseVisualStyleBackColor = false;
+            this.Bt_Exportar.Click += new System.EventHandler(this.Bt_Exportar_Click);
+            // 
+            // Bt_Delete
+            // 
+            this.Bt_Delete.Location = new System.Drawing.Point(12, 112);
+            this.Bt_Delete.Name = "Bt_Delete";
+            this.Bt_Delete.Size = new System.Drawing.Size(75, 23);
+            this.Bt_Delete.TabIndex = 11;
+            this.Bt_Delete.Text = "Deletar";
+            this.Bt_Delete.UseVisualStyleBackColor = true;
+            this.Bt_Delete.Click += new System.EventHandler(this.Bt_Delete_Click);
+            // 
+            // Bt_Importar
+            // 
+            this.Bt_Importar.BackColor = System.Drawing.Color.Lime;
+            this.Bt_Importar.FlatAppearance.BorderSize = 0;
+            this.Bt_Importar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Bt_Importar.Location = new System.Drawing.Point(256, 112);
+            this.Bt_Importar.Name = "Bt_Importar";
+            this.Bt_Importar.Size = new System.Drawing.Size(75, 23);
+            this.Bt_Importar.TabIndex = 12;
+            this.Bt_Importar.Text = "Importar";
+            this.Bt_Importar.UseVisualStyleBackColor = false;
+            this.Bt_Importar.Click += new System.EventHandler(this.Bt_Importar_Click);
+            // 
             // Fm_Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(770, 471);
+            this.Controls.Add(this.Bt_Importar);
+            this.Controls.Add(this.Bt_Delete);
+            this.Controls.Add(this.Bt_Exportar);
             this.Controls.Add(this.Bt_Filtrar);
             this.Controls.Add(this.Lb_Contagem);
             this.Controls.Add(this.Cb_Tables);
@@ -176,6 +224,9 @@ namespace SqlReaderQuery
         private System.Windows.Forms.ComboBox Cb_Tables;
         private System.Windows.Forms.Label Lb_Contagem;
         private System.Windows.Forms.Button Bt_Filtrar;
+        private System.Windows.Forms.Button Bt_Exportar;
+        private System.Windows.Forms.Button Bt_Delete;
+        private System.Windows.Forms.Button Bt_Importar;
     }
 }
 
