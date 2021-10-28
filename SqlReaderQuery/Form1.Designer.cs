@@ -42,6 +42,12 @@ namespace SqlReaderQuery
             this.Bt_Exportar = new System.Windows.Forms.Button();
             this.Bt_Delete = new System.Windows.Forms.Button();
             this.Bt_Importar = new System.Windows.Forms.Button();
+            this.LL_AdicionarComando = new System.Windows.Forms.LinkLabel();
+            this.LL_C1 = new System.Windows.Forms.LinkLabel();
+            this.LL_C2 = new System.Windows.Forms.LinkLabel();
+            this.LL_C3 = new System.Windows.Forms.LinkLabel();
+            this.LL_C4 = new System.Windows.Forms.LinkLabel();
+            this.LL_C5 = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.Gr_data)).BeginInit();
             this.SuspendLayout();
             // 
@@ -185,11 +191,84 @@ namespace SqlReaderQuery
             this.Bt_Importar.UseVisualStyleBackColor = false;
             this.Bt_Importar.Click += new System.EventHandler(this.Bt_Importar_Click);
             // 
+            // LL_AdicionarComando
+            // 
+            this.LL_AdicionarComando.AutoSize = true;
+            this.LL_AdicionarComando.Location = new System.Drawing.Point(13, 452);
+            this.LL_AdicionarComando.Name = "LL_AdicionarComando";
+            this.LL_AdicionarComando.Size = new System.Drawing.Size(201, 15);
+            this.LL_AdicionarComando.TabIndex = 13;
+            this.LL_AdicionarComando.TabStop = true;
+            this.LL_AdicionarComando.Text = "Adicionar Comando Personalizado +";
+            this.LL_AdicionarComando.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LL_C1_LinkClicked);
+            // 
+            // LL_C1
+            // 
+            this.LL_C1.AutoSize = true;
+            this.LL_C1.Location = new System.Drawing.Point(13, 480);
+            this.LL_C1.Name = "LL_C1";
+            this.LL_C1.Size = new System.Drawing.Size(60, 15);
+            this.LL_C1.TabIndex = 14;
+            this.LL_C1.TabStop = true;
+            this.LL_C1.Text = "linkLabel1";
+            this.LL_C1.Visible = false;
+            this.LL_C1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LL_C1_LinkClicked_1);
+            // 
+            // LL_C2
+            // 
+            this.LL_C2.AutoSize = true;
+            this.LL_C2.Location = new System.Drawing.Point(13, 499);
+            this.LL_C2.Name = "LL_C2";
+            this.LL_C2.Size = new System.Drawing.Size(60, 15);
+            this.LL_C2.TabIndex = 15;
+            this.LL_C2.TabStop = true;
+            this.LL_C2.Text = "linkLabel1";
+            this.LL_C2.Visible = false;
+            // 
+            // LL_C3
+            // 
+            this.LL_C3.AutoSize = true;
+            this.LL_C3.Location = new System.Drawing.Point(153, 480);
+            this.LL_C3.Name = "LL_C3";
+            this.LL_C3.Size = new System.Drawing.Size(60, 15);
+            this.LL_C3.TabIndex = 16;
+            this.LL_C3.TabStop = true;
+            this.LL_C3.Text = "linkLabel2";
+            this.LL_C3.Visible = false;
+            // 
+            // LL_C4
+            // 
+            this.LL_C4.AutoSize = true;
+            this.LL_C4.Location = new System.Drawing.Point(153, 498);
+            this.LL_C4.Name = "LL_C4";
+            this.LL_C4.Size = new System.Drawing.Size(60, 15);
+            this.LL_C4.TabIndex = 17;
+            this.LL_C4.TabStop = true;
+            this.LL_C4.Text = "linkLabel3";
+            this.LL_C4.Visible = false;
+            // 
+            // LL_C5
+            // 
+            this.LL_C5.AutoSize = true;
+            this.LL_C5.Location = new System.Drawing.Point(292, 479);
+            this.LL_C5.Name = "LL_C5";
+            this.LL_C5.Size = new System.Drawing.Size(60, 15);
+            this.LL_C5.TabIndex = 18;
+            this.LL_C5.TabStop = true;
+            this.LL_C5.Text = "linkLabel4";
+            this.LL_C5.Visible = false;
+            // 
             // Fm_Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(770, 535);
+            this.Controls.Add(this.LL_C5);
+            this.Controls.Add(this.LL_C4);
+            this.Controls.Add(this.LL_C3);
+            this.Controls.Add(this.LL_C2);
+            this.Controls.Add(this.LL_C1);
+            this.Controls.Add(this.LL_AdicionarComando);
             this.Controls.Add(this.Bt_Importar);
             this.Controls.Add(this.Bt_Delete);
             this.Controls.Add(this.Bt_Exportar);
@@ -227,6 +306,12 @@ namespace SqlReaderQuery
         private System.Windows.Forms.Button Bt_Exportar;
         private System.Windows.Forms.Button Bt_Delete;
         private System.Windows.Forms.Button Bt_Importar;
+        private System.Windows.Forms.LinkLabel LL_AdicionarComando;
+        private System.Windows.Forms.LinkLabel LL_C1;
+        private System.Windows.Forms.LinkLabel LL_C2;
+        private System.Windows.Forms.LinkLabel LL_C3;
+        private System.Windows.Forms.LinkLabel LL_C4;
+        private System.Windows.Forms.LinkLabel LL_C5;
     }
 }
 

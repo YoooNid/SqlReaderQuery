@@ -47,6 +47,8 @@ namespace SqlReaderQuery
             Cb_Database.DisplayMember = "name";
             Cb_Database.DataSource = dt; // os dados listados são armazenados dentro do Combobox.
             con.Close(); // fecha a conexão 
+            CarregarCamposPersonalizados();
+
 
 
             Lb_Contagem.Text = Gr_data.Rows.Count.ToString();
@@ -103,16 +105,16 @@ namespace SqlReaderQuery
         {
             ds = new DataSet();
             con.ConnectionString = StringConexaoBancoDeDados;
-            da = new SqlDataAdapter(Comando , con);
+            da = new SqlDataAdapter(Comando, con);
             try
             {
-                
-                    con.Open();
-                    da.Fill(ds, "all");
-                    con.Close();
-                    Lb_Contagem.Text = (Gr_data.Rows.Count - 1).ToString();
-                    return ds.Tables["all"];
-                
+
+                con.Open();
+                da.Fill(ds, "all");
+                con.Close();
+                Lb_Contagem.Text = (Gr_data.Rows.Count - 1).ToString();
+                return ds.Tables["all"];
+
             }
             catch
             {
@@ -120,10 +122,10 @@ namespace SqlReaderQuery
                 con.Close();
                 return ds.Tables["all"];
             }
-            
+
         }
 
-        private void ExecutarScript (string Comando, string StringConexaoBancoDeDados)
+        private void ExecutarScript(string Comando, string StringConexaoBancoDeDados)
         {
             ds = new DataSet();
             con.ConnectionString = StringConexaoBancoDeDados;
@@ -133,14 +135,45 @@ namespace SqlReaderQuery
                 con.Open();
                 da.Fill(ds, "all");
                 con.Close();
-                
+
 
             }
             catch (Exception e)
             {
                 MessageBox.Show("entrada invalida" + e);
                 con.Close();
-                
+
+            }
+        }
+
+        private void CarregarCamposPersonalizados()
+        {
+
+            //melhorar usando case
+            if (ini.IniReadValue("COMANDOS", "C1") != "")
+            {
+                LL_C1.Text = ini.IniReadValue("COMANDOS", "NOMEC1");
+                LL_C1.Visible = true;
+            }
+            if (ini.IniReadValue("COMANDOS", "C2") != "")
+            {
+                LL_C1.Text = ini.IniReadValue("COMANDOS", "NOMEC2");
+                LL_C1.Visible = true;
+            }
+            if (ini.IniReadValue("COMANDOS", "C3") != "")
+            {
+                LL_C1.Text = ini.IniReadValue("COMANDOS", "NOMEC3");
+                LL_C1.Visible = true;
+            }
+            if (ini.IniReadValue("COMANDOS", "C4") != "")
+            {
+                LL_C1.Text = ini.IniReadValue("COMANDOS", "NOMEC4");
+                LL_C1.Visible = true;
+            }
+            if (ini.IniReadValue("COMANDOS", "C5") != "")
+            {
+                LL_C1.Text = ini.IniReadValue("COMANDOS", "NOMEC5");
+                LL_C1.Visible = true;
             }
         }
 
@@ -269,6 +302,21 @@ namespace SqlReaderQuery
             Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, StringConexao);
 
         }
+
+        private void LL_C1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ComandoPersonalizado TelaCadastroComandos = new ComandoPersonalizado();
+            TelaCadastroComandos.Show();
+        }
+        private void LL_C1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Tx_ComandoAplicar.Text = ini.IniReadValue("COMANDOS", "C1");
+        }
+
+
+
+
+
     }
 }
 
