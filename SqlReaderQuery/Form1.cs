@@ -32,9 +32,9 @@ namespace SqlReaderQuery
             Gr_data.DataSource = null; // o que tiver no grid sera apagado
             //executa o que estiver no Tx_ComandoAplicar e joga as informações para a grid
             Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
-            Lb_Contagem.Text = (Gr_data.Rows.Count - 1).ToString();
+            Lb_Contagem.Text = (Gr_data.Rows.Count - 1).ToString(); // contagem de rows na grid (tirando -1 por conta de uma linha gerada em branco )
 
-        }
+        } // executa o comando do campo Tx_ComandoAplicar
         private void Fm_Principal_Load(object sender, EventArgs e)
         {
             Gr_data.AllowUserToOrderColumns = true; // habilita a ordenação no grid
@@ -47,7 +47,7 @@ namespace SqlReaderQuery
             Cb_Database.DisplayMember = "name";
             Cb_Database.DataSource = dt; // os dados listados são armazenados dentro do Combobox.
             con.Close(); // fecha a conexão 
-            CarregarCamposPersonalizados();
+            CarregarCamposPersonalizados(); // função para puxar do arquivo de configuração caso haja algum comando personalizado.
 
 
 
@@ -56,34 +56,34 @@ namespace SqlReaderQuery
 
         private void Cb_Database_SelectedValueChanged(object sender, EventArgs e)
         {
-
-            con.Close();
-            con.ConnectionString = (@"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
-            con.Open();
+            
+            con.Close(); // caso a conexão venha aberta,  ela é fechada
+            con.ConnectionString = (@"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True"); // inicia a conexão de acordo com o campo escolhido pelo usuario. 
+            con.Open(); // abre a conexão com o banco de dados 
             com.Connection = con;
-            com.CommandText = "select TABLE_NAME from " + Cb_Database.Text + ".information_schema.columns where TABLE_CATALOG ='" + Cb_Database.Text + "' group by TABLE_NAME";
+            com.CommandText = "select TABLE_NAME from " + Cb_Database.Text + ".information_schema.columns where TABLE_CATALOG ='" + Cb_Database.Text + "' group by TABLE_NAME"; // carrega o combobox com as informações das colunas da tabela selecionada. 
 
-            SqlDataReader dr1 = com.ExecuteReader();
+            SqlDataReader dr1 = com.ExecuteReader(); // executa o comando. 
             DataTable dt1 = new DataTable();
-            dt1.Load(dr1);
+            dt1.Load(dr1); // carrega as informações. 
             Cb_Tables.DisplayMember = "TABLE_NAME";
-            Cb_Tables.DataSource = dt1;
+            Cb_Tables.DataSource = dt1; // carrega as informações no combobox
             con.Close();
-        }
+        } // ao selecionar o banco, carrega o combobox com as tabelas referentes ao banco selecionado
 
         private void Cb_Tables_SelectedValueChanged(object sender, EventArgs e)
         {
-            Tx_ComandoAplicar.Text = "select * from " + Cb_Tables.Text;
+            Tx_ComandoAplicar.Text = "select * from " + Cb_Tables.Text; // assim que selecionado os dois combobox ele pega e transforma em comando de acordo com os dados. 
         }
 
         private void Bt_Filtrar_Click(object sender, EventArgs e)
         {
-            string valores;
-            valores = Convert.ToString(Tx_ComandoAplicar.Text); // texto que esta armazenado no campo 
+            string Comando = Tx_ComandoAplicar.Text.ToLower(); // transforma a string para caracteres minusculos. 
+            string valores = Convert.ToString(Tx_ComandoAplicar.Text); // texto que esta armazenado no campo 
             string nome = Gr_data.CurrentCell.Value.ToString(); //pega a informação da celula selecionada e importa para texto
             nome = nome.Replace(',', '.');//troca as virgulas por ponto.
 
-            if (Tx_ComandoAplicar.Text.Contains("Where") == true ^ Tx_ComandoAplicar.Text.Contains("where") == true)
+            if (Tx_ComandoAplicar.Text.Contains("where") == true) // se houver na string a palavra where, o programa em vez de colocar mais um where no filtro, ele coloca "and" 
             {
 
                 Tx_ComandoAplicar.Text = valores + " and " + Gr_data.CurrentCell.OwningColumn.Name + "='" + nome + "'";
@@ -99,7 +99,7 @@ namespace SqlReaderQuery
                 Lb_Contagem.Text = (Gr_data.Rows.Count - 1).ToString();
             }
 
-        }
+        } // pega a celula selecionada e faz o filtro de acordo com a informação da celula clicada. 
 
         private DataTable ExecutarComando(string Comando, string StringConexaoBancoDeDados)
         {
@@ -123,7 +123,7 @@ namespace SqlReaderQuery
                 return ds.Tables["all"];
             }
 
-        }
+        } // função para "compilar" o comando.. passando como parametros o comando digitado e a string de conexão.
 
         private void ExecutarScript(string Comando, string StringConexaoBancoDeDados)
         {
@@ -144,9 +144,9 @@ namespace SqlReaderQuery
                 con.Close();
 
             }
-        }
+        } // Comando para executar um script digitado;
 
-        private void CarregarCamposPersonalizados()
+        public void CarregarCamposPersonalizados()
         {
 
             //melhorar usando case
@@ -154,26 +154,28 @@ namespace SqlReaderQuery
             {
                 LL_C1.Text = ini.IniReadValue("COMANDOS", "NOMEC1");
                 LL_C1.Visible = true;
+               
             }
             if (ini.IniReadValue("COMANDOS", "C2") != "")
             {
-                LL_C1.Text = ini.IniReadValue("COMANDOS", "NOMEC2");
-                LL_C1.Visible = true;
+                LL_C2.Text = ini.IniReadValue("COMANDOS", "NOMEC2");
+                LL_C2.Visible = true;
+               
             }
             if (ini.IniReadValue("COMANDOS", "C3") != "")
             {
-                LL_C1.Text = ini.IniReadValue("COMANDOS", "NOMEC3");
-                LL_C1.Visible = true;
+                LL_C3.Text = ini.IniReadValue("COMANDOS", "NOMEC3");
+                LL_C3.Visible = true;
             }
             if (ini.IniReadValue("COMANDOS", "C4") != "")
             {
-                LL_C1.Text = ini.IniReadValue("COMANDOS", "NOMEC4");
-                LL_C1.Visible = true;
+                LL_C4.Text = ini.IniReadValue("COMANDOS", "NOMEC4");
+                LL_C4.Visible = true;
             }
             if (ini.IniReadValue("COMANDOS", "C5") != "")
             {
-                LL_C1.Text = ini.IniReadValue("COMANDOS", "NOMEC5");
-                LL_C1.Visible = true;
+                LL_C5.Text = ini.IniReadValue("COMANDOS", "NOMEC5");
+                LL_C5.Visible = true;
             }
         }
 
@@ -185,7 +187,7 @@ namespace SqlReaderQuery
             ExecutarScript(Tx_ComandoExecutar.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
             Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
             Lb_Contagem.Text = (Gr_data.Rows.Count - 1).ToString();
-        }
+        } // executa o comando dentro do Tx_ComandoExecutar. 
 
         private void Bt_Excel_Click(object sender, EventArgs e)
         {
@@ -219,7 +221,7 @@ namespace SqlReaderQuery
                     XcelApp.Quit();
                 }
             }
-        }
+        } // grava os dados do grid em excel
 
         private void Gr_data_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -250,7 +252,7 @@ namespace SqlReaderQuery
             string ComandoUpdate = "update " + Cb_Database.Text + ".." + Cb_Tables.Text + " set " + NomeDaColuna + " = '"+ Valor + "' where " + ChavePrimaria + " = '" + ValorChavePrimaria + "'";//nome da chave primaria+
             ExecutarScript(ComandoUpdate, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
             Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, @"Data Source = " + ini.IniReadValue("DATABASE", "SERVIDOR") + "; Initial Catalog = " + Cb_Database.Text + "; Integrated Security = True");
-        }
+        } // caso um valor for alterado no grid, o sistema irá carregar os dados e executar um comando para alterar no banco de dados. 
 
         private void Bt_Exportar_Click(object sender, EventArgs e)
         {
@@ -268,7 +270,7 @@ namespace SqlReaderQuery
 
             Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, StringConexao);
             MessageBox.Show("Dados Exportados com sucesso para a tabela temporaria");
-        }
+        } // exporta os dados selecionados para uma tabela temporaria no banco de dados. 
 
         private void Bt_Delete_Click(object sender, EventArgs e)
         {
@@ -282,7 +284,7 @@ namespace SqlReaderQuery
             else
                 Tx_ComandoExecutar.Text = DeletarComando;
 
-        }
+        } // caso o usuario quiser deletar, ao apertar o botão ele filtra a tabela que quer deletar e prepara o comando, caso tiver where no comando tudo que estiver a frente ele faz o filtro. 
 
         private void Bt_Importar_Click(object sender, EventArgs e)
         {
@@ -301,11 +303,12 @@ namespace SqlReaderQuery
            // ExecutarScript("Drop table DbSqltemp", StringConexao);
             Gr_data.DataSource = ExecutarComando(Tx_ComandoAplicar.Text, StringConexao);
 
-        }
+        } // pega os dados exportados anteriormente e joga nas tabelas selecionadas (caso a tabela seja diferente da exportada anteriormente o banco de dados retorna um erro.)
 
         private void LL_C1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             ComandoPersonalizado TelaCadastroComandos = new ComandoPersonalizado();
+            
             TelaCadastroComandos.Show();
         }
         private void LL_C1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)

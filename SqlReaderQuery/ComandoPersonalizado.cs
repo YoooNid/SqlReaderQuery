@@ -11,20 +11,26 @@ using System.Windows.Forms;
 
 namespace SqlReaderQuery
 {
-    public partial class ComandoPersonalizado : Form
+    public partial class ComandoPersonalizado : Form 
     {
+        public Fm_Principal varForm { get; internal set; }
         public ComandoPersonalizado()
         {
             InitializeComponent();
+           
         }
         IniFiles ini = new IniFiles(@"C:\rrsoft\agiospdv\pdv.ini");
+
+        //void CarregarCamposPersonalizados() => (Owner as Fm_Principal).CarregarCamposPersonalizados();
+
         private void Bt_GravarComandoPersonalizado_Click(object sender, EventArgs e)
         {
             string PreencherNome = Cb_PosicaoComando.Text;
             ini.IniWriteValue("COMANDOS", PreencherNome, Tx_EditarComando.Text);
             ini.IniWriteValue("COMANDOS", "NOME"+ PreencherNome, Tx_NomeComando.Text);
 
-            MessageBox.Show("Comando Salvo na posição " + Tx_NomeComando.Text);
+            MessageBox.Show("Comando Salvo na posição " + Tx_NomeComando.Text+" Será necessario Reiniciar o programa.");
+            
             this.Close();
            
                 
@@ -36,7 +42,8 @@ namespace SqlReaderQuery
 
         private void ComandoPersonalizado_Load(object sender, EventArgs e)
         {
-            Cb_PosicaoComando.SelectedIndex = 1;
+            Cb_PosicaoComando.SelectedIndex = 0;
         }
+
     }
 }
