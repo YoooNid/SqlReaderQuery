@@ -68,7 +68,16 @@ namespace SqlReaderQuery
             dt1.Load(dr1); // carrega as informações. 
             Cb_Tables.DisplayMember = "TABLE_NAME";
             Cb_Tables.DataSource = dt1; // carrega as informações no combobox
+            
+            com.CommandText = "select name from sys.views group by name";
+            SqlDataReader dr2 = com.ExecuteReader(); // executa o comando. 
+            DataTable dt2 = new DataTable();
+            dt2.Load(dr2);
+            Cb_Views.DisplayMember = "name";
+            Cb_Views.DataSource = dt2;
             con.Close();
+
+
         } // ao selecionar o banco, carrega o combobox com as tabelas referentes ao banco selecionado
 
         private void Cb_Tables_SelectedValueChanged(object sender, EventArgs e)
@@ -316,10 +325,10 @@ namespace SqlReaderQuery
             Tx_ComandoAplicar.Text = ini.IniReadValue("COMANDOS", "C1");
         }
 
-
-
-
-
+        private void Bt_VisualizarViews_Click(object sender, EventArgs e)
+        {
+            Tx_ComandoAplicar.Text = "select * from " + Cb_Views.Text;
+        }
     }
 }
 

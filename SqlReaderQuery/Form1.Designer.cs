@@ -48,6 +48,11 @@ namespace SqlReaderQuery
             this.LL_C3 = new System.Windows.Forms.LinkLabel();
             this.LL_C4 = new System.Windows.Forms.LinkLabel();
             this.LL_C5 = new System.Windows.Forms.LinkLabel();
+            this.Cb_Views = new System.Windows.Forms.ComboBox();
+            this.Lb_Views = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.Bt_VisualizarViews = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Gr_data)).BeginInit();
             this.SuspendLayout();
             // 
@@ -138,8 +143,9 @@ namespace SqlReaderQuery
             // 
             // Lb_Contagem
             // 
+            this.Lb_Contagem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Lb_Contagem.AutoSize = true;
-            this.Lb_Contagem.Location = new System.Drawing.Point(545, 20);
+            this.Lb_Contagem.Location = new System.Drawing.Point(758, 9);
             this.Lb_Contagem.Name = "Lb_Contagem";
             this.Lb_Contagem.Size = new System.Drawing.Size(0, 15);
             this.Lb_Contagem.TabIndex = 8;
@@ -258,11 +264,61 @@ namespace SqlReaderQuery
             this.LL_C5.Text = "linkLabel4";
             this.LL_C5.Visible = false;
             // 
+            // Cb_Views
+            // 
+            this.Cb_Views.FormattingEnabled = true;
+            this.Cb_Views.Location = new System.Drawing.Point(434, 25);
+            this.Cb_Views.Name = "Cb_Views";
+            this.Cb_Views.Size = new System.Drawing.Size(195, 23);
+            this.Cb_Views.TabIndex = 19;
+            // 
+            // Lb_Views
+            // 
+            this.Lb_Views.AutoSize = true;
+            this.Lb_Views.Location = new System.Drawing.Point(434, 9);
+            this.Lb_Views.Name = "Lb_Views";
+            this.Lb_Views.Size = new System.Drawing.Size(37, 15);
+            this.Lb_Views.TabIndex = 20;
+            this.Lb_Views.Text = "Views";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 8);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 15);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "Database";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(213, 8);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(39, 15);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Tables";
+            // 
+            // Bt_VisualizarViews
+            // 
+            this.Bt_VisualizarViews.Location = new System.Drawing.Point(636, 25);
+            this.Bt_VisualizarViews.Name = "Bt_VisualizarViews";
+            this.Bt_VisualizarViews.Size = new System.Drawing.Size(26, 23);
+            this.Bt_VisualizarViews.TabIndex = 23;
+            this.Bt_VisualizarViews.Text = "V";
+            this.Bt_VisualizarViews.UseVisualStyleBackColor = true;
+            this.Bt_VisualizarViews.Click += new System.EventHandler(this.Bt_VisualizarViews_Click);
+            // 
             // Fm_Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(770, 535);
+            this.Controls.Add(this.Bt_VisualizarViews);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.Lb_Views);
+            this.Controls.Add(this.Cb_Views);
             this.Controls.Add(this.LL_C5);
             this.Controls.Add(this.LL_C4);
             this.Controls.Add(this.LL_C3);
@@ -312,6 +368,11 @@ namespace SqlReaderQuery
         private System.Windows.Forms.LinkLabel LL_C3;
         private System.Windows.Forms.LinkLabel LL_C4;
         private System.Windows.Forms.LinkLabel LL_C5;
+        private System.Windows.Forms.ComboBox Cb_Views;
+        private System.Windows.Forms.Label Lb_Views;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button Bt_VisualizarViews;
     }
 }
 
